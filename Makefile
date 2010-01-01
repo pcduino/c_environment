@@ -18,14 +18,17 @@ INCLUDES = \
 	-I$(DIR)/libraries \
 	-I$(DIR)/libraries/SPI \
 	-I$(DIR)/libraries/Wire \
-	-I$(DIR)/libraries/PN532_SPI 
+	-I$(DIR)/libraries/PN532_SPI \
+	-I$(DIR)/libraries/PID_v1 \
+	-I$(DIR)/libraries/I2Cdev \
+	-I$(DIR)/libraries/MPU6050
+	
 
 CFLAGS = -fPIC
 #CFLAGS = $(INCLUDES)
 #CFLAGS += -march=armv7-a -mfpu=neon
 
 SRCS = \
-	hardware/arduino/cores/arduino/main.cpp \
 	hardware/arduino/cores/arduino/platform.cpp \
 	hardware/arduino/cores/arduino/Print.cpp \
 	hardware/arduino/cores/arduino/Stream.cpp \
@@ -44,6 +47,9 @@ SRCS = \
 	libraries/LiquidCrystal/Dyrobot_MCP23008.cpp \
 	libraries/LiquidCrystal/LiquidCrystal.cpp \
 	libraries/PN532_SPI/PN532.cpp \
+	libraries/PID_v1/PID_v1.cpp \
+	libraries/I2Cdev/I2Cdev.cpp \
+	libraries/MPU6050/MPU6050.cpp \
 
 #OBJS = $(SRCS:%.c=%.o)
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRCS)))
