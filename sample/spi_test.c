@@ -25,11 +25,15 @@ void setup() {
 
    // initialize SPI:
     SPI.begin(); 
+    SPI.setClockDivider(SPI_CLOCK_DIV128);
 }
 
-void loop() {
+void loop() 
+{
+     SPI.transfer(0x13, SPI_LAST);
+     //delayMicroseconds(1);
     //MSB first 
-    printf("spi flash id = 0x%x\n", ReadSpiflashID());
-    delay(2000);
+    //printf("spi flash id = 0x%x\n", ReadSpiflashID());
+    //delay(2000);
 }
 

@@ -40,8 +40,13 @@ SRCS = \
 	hardware/arduino/cores/arduino/WString.cpp \
 	libraries/Serial/Serial.cpp \
 	libraries/Wire/Wire.cpp \
-	libraries/SPI/SPI.cpp 
-	
+	libraries/SPI/SPI.cpp \
+	libraries/LiquidCrystal/Dyrobot_MCP23008.cpp \
+	libraries/LiquidCrystal/LiquidCrystal.cpp \
+	libraries/ADXL345/ADXL345.cpp  \
+        libraries/TFTtouch/TFTv2.cpp  
+
+
 #OBJS = $(SRCS:%.c=%.o)
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRCS)))
 

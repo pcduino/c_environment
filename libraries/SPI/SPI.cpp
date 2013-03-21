@@ -11,6 +11,7 @@
 #include "SPI.h"
 #include <linux/spi/spidev.h>
 
+#define SPI_FULL_DUPLEX 1
 SPIClass SPI;
 
 static const char *spi_name = "/dev/spidev0.0";
@@ -129,6 +130,8 @@ char SPIClass::transfer(char val, int transferMode)
     char tx = val;
     char rx = 0;
 	unsigned short delay_usecs = 0;
+
+#ifndef SPI_FULL_DUPLEX
     struct spi_ioc_transfer tr[2]={0};
 
     if (transferMode == SPI_CONTINUE) 
@@ -151,6 +154,26 @@ char SPIClass::transfer(char val, int transferMode)
     ret = ioctl(_fd, SPI_IOC_MESSAGE(2), tr);
     if (ret < 1)
         pabort("can't send spi message");
+#else
+    struct spi_ioc_transfer tr;
+
+    if (transferMode == SPI_CONTINUE) 
+	   delay_usecs = 0;
+	else if (transferMode == SPI_LAST)  
+	   delay_usecs = 0xAA55;	
+
+	memset(&tr, 0x0, sizeof(spi_ioc_transfer));
+	tr.tx_buf = (unsigned long)&tx;
+	tr.rx_buf = (unsigned long)&rx;
+	tr.len = 1;
+	tr.speed_hz = _speed;
+	tr.bits_per_word = _bits_per_word;
+	tr.delay_usecs = delay_usecs;
+
+    ret = ioctl(_fd, SPI_IOC_MESSAGE(1), &tr);
+    if (ret < 1)
+        pabort("can't send spi message");
+#endif
 
     //printf("rx = %.2X \r\n", rx);
 

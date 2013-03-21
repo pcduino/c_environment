@@ -71,7 +71,7 @@ void digitalWrite(uint8_t pin, uint8_t value)
 		 {
 			 fprintf(stderr, "write gpio %d  failed\n", pin);
 			 exit(-1);
-		 }		  
+		 }
 	 }
 	 else
 	 {
@@ -79,7 +79,6 @@ void digitalWrite(uint8_t pin, uint8_t value)
 			 __FUNCTION__, pin, value);
 		 exit(-1);
 	  }    
-
 }
 
 int digitalRead(uint8_t pin)

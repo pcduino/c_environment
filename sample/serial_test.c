@@ -12,9 +12,10 @@
 
 void setup() { 
  //Initialize serial and wait for port to open:
-  int rate = 115200;
+  int rate = 9600;
   Serial.begin(rate); 
-  while (!Serial) {
+  while (!Serial)
+ {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
   
