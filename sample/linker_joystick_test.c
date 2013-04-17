@@ -1,11 +1,11 @@
 /*
-* Joystick test program for a10
+* Joystick test program
 */
 #include <core.h>
 
 void setup(){
-	printf("Joystick Test Code!\n");
-	printf("Using ADC_2 and ADC_3.\n");	
+    printf("Joystick Test Code!\n");
+    printf("Using ADC_2 and ADC_3.\n"); 
 }
 
 void loop() {

@@ -25,27 +25,27 @@
 // LiquidCrystal constructor is called).
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
-			     uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-			     uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
+                 uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+                 uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
 {
   init(0, rs, rw, enable, d0, d1, d2, d3, d4, d5, d6, d7);
 }
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t enable,
-			     uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-			     uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
+                 uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+                 uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
 {
   init(0, rs, 255, enable, d0, d1, d2, d3, d4, d5, d6, d7);
 }
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
-			     uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3)
+                 uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3)
 {
   init(1, rs, rw, enable, d0, d1, d2, d3, 0, 0, 0, 0);
 }
 
 LiquidCrystal::LiquidCrystal(uint8_t rs,  uint8_t enable,
-			     uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3)
+                 uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3)
 {
   init(1, rs, 255, enable, d0, d1, d2, d3, 0, 0, 0, 0);
 }
@@ -95,8 +95,8 @@ LiquidCrystal::LiquidCrystal(uint8_t data, uint8_t clock, uint8_t latch ) {
 
 
 void LiquidCrystal::init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t enable,
-			 uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-			 uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
+             uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+             uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
 {
   _rs_pin = rs;
   _rw_pin = rw;
@@ -143,12 +143,14 @@ void LiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
     _i2c.pinMode(_rs_pin, OUTPUT);
     _i2c.pinMode(_enable_pin, OUTPUT);
   } else if (_SPIclock != 255) {
-	 //pinMode(_SPIdata, OUTPUT);
-	 //pinMode(_SPIclock, OUTPUT);
-	 //pinMode(_SPIlatch, OUTPUT);
-	 //printf("LiquidCrystal _SPIdata=%d, _SPIclock=%d, _SPIlatch=%d\r\n\r\n", _SPIdata, _SPIclock, _SPIlatch);
-	 SPI.begin(); 
-	 //SPI.setClockDivider(SPI_CLOCK_DIV16);
+     //pinMode(_SPIdata, OUTPUT);
+     //pinMode(_SPIclock, OUTPUT);
+     //pinMode(_SPIlatch, OUTPUT);
+     //printf("LiquidCrystal _SPIdata=%d, _SPIclock=%d, _SPIlatch=%d\r\n\r\n", _SPIdata, _SPIclock, _SPIlatch);
+     SPI.begin(); 
+     SPI.setDataMode(SPI_MODE3);
+     SPI.setBitOrder(MSBFIRST);
+     //SPI.setClockDivider(SPI_CLOCK_DIV16);
     _SPIbuff = 0x80; // backlight
   }
 
@@ -163,9 +165,6 @@ void LiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
     _displayfunction |= LCD_5x10DOTS;
   }
 
-  // SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
-  // according to datasheet, we need at least 40ms after power rises above 2.7V
-  // before sending commands. Arduino can turn on way befer 4.5V so we'll wait 50
   delayMicroseconds(50000); 
 
   // Now we pull both RS and R/W low to begin commands
@@ -350,7 +349,7 @@ void  LiquidCrystal::_digitalWrite(uint8_t p, uint8_t d) {
     //digitalWrite(_SPIlatch, LOW);
     //shiftOut(_SPIdata, _SPIclock, MSBFIRST,_SPIbuff);
     //digitalWrite(_SPIlatch, HIGH);
-	SPI.transfer(_SPIbuff, SPI_LAST);
+    SPI.transfer(_SPIbuff, SPI_LAST);
   } else {
     // straightup IO
     digitalWrite(p, d);
@@ -414,29 +413,29 @@ void LiquidCrystal::write4bits(uint8_t value) {
     // speed up for i2c since its sluggish
     for (int i = 0; i < 4; i++) {
       //out &= ~_BV(_data_pins[i]);
-	  out &= ~(_data_pins[i]);
+      out &= ~(_data_pins[i]);
       out |= ((value >> i) & 0x1) << _data_pins[i];
     }
 
     // make sure enable is low
     //out &= ~ _BV(_enable_pin);
-	out &= ~ (_enable_pin);
+    out &= ~ (_enable_pin);
 
     _i2c.writeGPIO(out);
 
     // pulse enable
     //delayMicroseconds(1);
-	delayMicrosecondsSched(1);
+    delayMicrosecondsSched(1);
     //out |= _BV(_enable_pin);
-	out |= (_enable_pin);
+    out |= (_enable_pin);
     _i2c.writeGPIO(out);
     //delayMicroseconds(1);
-	delayMicrosecondsSched(1);
+    delayMicrosecondsSched(1);
     //out &= ~_BV(_enable_pin);
-	out &= ~(_enable_pin);
+    out &= ~(_enable_pin);
     _i2c.writeGPIO(out);   
     //delayMicroseconds(100);
-	delayMicrosecondsSched(100);
+    delayMicrosecondsSched(100);
   } else */{
     for (int i = 0; i < 4; i++) {
       _pinMode(_data_pins[i], OUTPUT);

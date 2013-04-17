@@ -24,7 +24,7 @@ extern "C" {
 
 // Initialize Class Variables //////////////////////////////////////////////////
 int TwoWire::i2c_handle = 0;
-	
+    
 uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
 uint8_t TwoWire::rxBufferIndex = 0;
 uint8_t TwoWire::rxBufferLength = 0;
@@ -55,8 +55,8 @@ void TwoWire::begin(void)
   txBufferLength = 0;
  
   if (!i2c_handle) {
-	 if ((i2c_handle = open("/dev/i2c-2", O_RDWR)) < 0) 
-		pabort("can't open device");	   
+     if ((i2c_handle = open("/dev/i2c-2", O_RDWR)) < 0) 
+        pabort("can't open device");       
   }
 }
 
@@ -86,11 +86,11 @@ uint8_t TwoWire::requestFrom(int address, int quantity)
 
   // 7 or 10 bits address 
   if (address <= 0x7F) {
-	 if (ioctl(i2c_handle, I2C_TENBIT, 0) < 0) 
-	   pabort("Set I2C 7-bits addres flag fail");
+     if (ioctl(i2c_handle, I2C_TENBIT, 0) < 0) 
+       pabort("Set I2C 7-bits addres flag fail");
   }else if(address <= 0x3FF){
-	 if (ioctl(i2c_handle, I2C_TENBIT, 1) < 0) 
-	   pabort("Set I2C 10-bits addres flag fail");
+     if (ioctl(i2c_handle, I2C_TENBIT, 1) < 0) 
+       pabort("Set I2C 10-bits addres flag fail");
   }
   
   if (ioctl(i2c_handle, I2C_SLAVE, address) < 0) 
@@ -99,9 +99,9 @@ uint8_t TwoWire::requestFrom(int address, int quantity)
   // perform blocking read into buffer
   int ret = ::read(i2c_handle, rxBuffer, quantity);
   if (ret > 0) 
-	 read_out = ret;
+     read_out = ret;
   else
-	 read_out = 0;
+     read_out = 0;
 
   // set rx buffer iterator vars
   rxBufferIndex = 0;
@@ -129,11 +129,11 @@ void TwoWire::beginTransmission(int address)
 
   // 7 or 10 bits address 
   if (address <= 0x7F) {
-	 if (ioctl(i2c_handle, I2C_TENBIT, 0) < 0) 
-	   pabort("Set I2C 7-bits addres flag fail");
+     if (ioctl(i2c_handle, I2C_TENBIT, 0) < 0) 
+       pabort("Set I2C 7-bits addres flag fail");
   }else if(address <= 0x3FF){
-	 if (ioctl(i2c_handle, I2C_TENBIT, 1) < 0) 
-	   pabort("Set I2C 10-bits addres flag fail");
+     if (ioctl(i2c_handle, I2C_TENBIT, 1) < 0) 
+       pabort("Set I2C 10-bits addres flag fail");
   }
 
   if (ioctl(i2c_handle, I2C_SLAVE, address) < 0) 
@@ -153,10 +153,10 @@ uint8_t TwoWire::endTransmission(void)
   // transmit buffer (blocking)
   int8_t ret = ::write(i2c_handle, txBuffer, txBufferLength);
   if (ret != txBufferLength) {
-	 printf("i2c transaction failed\r\n");
-	 ret = 4;
+     printf("i2c transaction failed\r\n");
+     ret = 4;
   }else
-	 ret = 0;
+     ret = 0;
 
   // reset tx buffer iterator vars
   txBufferIndex = 0;
@@ -175,7 +175,7 @@ int TwoWire::write(byte data)
   // in master transmitter mode
     // don't bother if buffer is full
     if(txBufferLength >= BUFFER_LENGTH){
-	  setWriteError();
+      setWriteError();
       return 0;
     }
     // put byte in tx buffer

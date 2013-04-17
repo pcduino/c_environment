@@ -1,19 +1,19 @@
 /*
-* Light sensor test program for a10
+* Light sensor test program
 */
 #include <core.h>
 #include <math.h>
 
-const int ledPin = 0;						//Connect the LED Grove module to I/O_0
-const int thresholdvalue = 10;	//The treshold for which the LED should turn on.
-const int adcIn = 0;	
+const int ledPin = 0;                       //Connect the LED Grove module to I/O_0
+const int thresholdvalue = 10;  //The treshold for which the LED should turn on.
+const int adcIn = 0;    
 
 unsigned int filter[4];
 unsigned int *ptsampleNew;
 unsigned int sampleCount;
 void setup() {
-	printf("Light sensor test code!\n");
-	printf("Using I/O_0=Drive LED, ADC_0=Sensor output.\n");	
+    printf("Light sensor test code!\n");
+    printf("Using I/O_0=Drive LED, ADC_0=Sensor output.\n");    
   pinMode(ledPin,OUTPUT);
   
   filter[0] = analogRead(adcIn);
@@ -28,9 +28,9 @@ void loop() {
   int Rsensor;
   
   if(sampleCount >= 3){
-  	sampleCount = 0;
+    sampleCount = 0;
   }else{
-  	sampleCount++;
+    sampleCount++;
   }
   printf("adc %d :%d!\n", sampleCount, sensorValue);
   ptsampleNew = &filter[sampleCount];
@@ -43,9 +43,9 @@ void loop() {
   if(Rsensor < thresholdvalue){
     digitalWrite(ledPin,HIGH);
   }else{
-		digitalWrite(ledPin,LOW);
-	}
-	
-	printf("adc:%d!\n", sensorValue);
-	delay(200);
+        digitalWrite(ledPin,LOW);
+    }
+    
+    printf("adc:%d!\n", sensorValue);
+    delay(200);
 } 

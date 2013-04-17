@@ -1,5 +1,5 @@
 /*
-* Buzzer test program for a10
+* Buzzer test program
 */
 #include <core.h>
 int speakerPin = 1;  
@@ -12,10 +12,10 @@ void playTone(int tone, int duration)
 {   
   for (long i = 0; i < duration * 1000L; i += tone * 2) 
   {     
-		digitalWrite(speakerPin, HIGH);     
-		delayMicroseconds(tone);     
-		digitalWrite(speakerPin, LOW);     
-		delayMicroseconds(tone);   
+        digitalWrite(speakerPin, HIGH);     
+        delayMicroseconds(tone);     
+        digitalWrite(speakerPin, LOW);     
+        delayMicroseconds(tone);   
   } 
 }   
 
@@ -27,16 +27,16 @@ void playNote(char note, int duration)
   {     
     if (names[i] == note) 
     {       
-			playTone(tones[i], duration);     
+            playTone(tones[i], duration);     
     }   
   } 
 }   
 
 void setup() 
 {   
-	printf("Buzzer test code!\n");
-	printf("Using I/O_1=D1, I/O_2=D2.\n");	
-  	
+    printf("Buzzer test code!\n");
+    printf("Using I/O_1=D1, I/O_2=D2.\n");  
+    
   pinMode(speakerPin, OUTPUT); 
   pinMode(2, OUTPUT);
   digitalWrite(2, LOW);   

@@ -10,16 +10,16 @@ extern void loop(void);
 int main(int _argc, char **_argv)
 {
 
-	argc = _argc;
-	argv = _argv;
-	init();
-	setup();
+    argc = _argc;
+    argv = _argv;
+    init();
+    setup();
     
-	for (;;) {
-		loop();
-		if (serialEventRun) serialEventRun();
-	}
+    for (;;) {
+        loop();
+        if (serialEventRun) serialEventRun();
+    }
         
-	return 0;
+    return 0;
 }
 

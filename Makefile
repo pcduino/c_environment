@@ -18,7 +18,8 @@ INCLUDES = \
 	-I$(DIR)/libraries \
 	-I$(DIR)/libraries/Serial \
 	-I$(DIR)/libraries/SPI \
-	-I$(DIR)/libraries/Wire 
+	-I$(DIR)/libraries/Wire \
+	-I$(DIR)/libraries/PN532_SPI 
 
 CFLAGS =
 #CFLAGS = $(INCLUDES)
@@ -43,9 +44,7 @@ SRCS = \
 	libraries/SPI/SPI.cpp \
 	libraries/LiquidCrystal/Dyrobot_MCP23008.cpp \
 	libraries/LiquidCrystal/LiquidCrystal.cpp \
-	libraries/ADXL345/ADXL345.cpp  \
-        libraries/TFTtouch/TFTv2.cpp  
-
+	libraries/PN532_SPI/PN532.cpp \
 
 #OBJS = $(SRCS:%.c=%.o)
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRCS)))

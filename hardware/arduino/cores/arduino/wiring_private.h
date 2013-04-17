@@ -39,6 +39,7 @@ extern int gpio_mode_fd[MAX_GPIO_NUM+1];
 extern int adc_fd[MAX_ADC_NUM+1];
 extern int pwm_fd[MAX_PWM_NUM+1];
 
+#define EXTERNAL_NUM_INTERRUPTS 2
 
 typedef void (*voidFuncPtr)(void);
 

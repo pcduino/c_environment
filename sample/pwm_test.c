@@ -1,5 +1,5 @@
 /*
-* PWM test program for a10
+* PWM test program
 */
 #include <core.h>
 int pwm_id = 0;
@@ -9,7 +9,7 @@ void setup()
 {
     if ( argc != 3 )
     {
-        printf("Usage %s PWM_ID(0-5) Duty Level(0~256)\n", argv[0]);
+        printf("Usage %s PIN_ID(3/9/10/11) Duty Level(0~32) or PIN_ID(5/6) Duty Level(0~255)\n ", argv[0]);
         exit(-1);   
     }
     

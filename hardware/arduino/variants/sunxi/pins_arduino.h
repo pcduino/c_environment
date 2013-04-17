@@ -33,7 +33,7 @@
 #define MAX_PWM_NUM 5
 
 #undef MAX_ADC_NUM
-#define MAX_ADC_NUM 5
+#define MAX_ADC_NUM 11
 
 #define GPIO0  0 
 #define GPIO1  1 

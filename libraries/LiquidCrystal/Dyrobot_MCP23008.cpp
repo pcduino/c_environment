@@ -27,7 +27,7 @@ void Dyrobot_MCP23008::begin(uint8_t addr) {
   Wire.write((byte)0x00);
   Wire.write((byte)0x00);
   Wire.write((byte)0x00);
-  Wire.write((byte)0x00);	
+  Wire.write((byte)0x00);   
 
   Wire.endTransmission();
 
@@ -117,7 +117,7 @@ uint8_t Dyrobot_MCP23008::digitalRead(uint8_t p) {
 
 uint8_t Dyrobot_MCP23008::read8(uint8_t addr) {
   Wire.beginTransmission(MCP23008_ADDRESS | i2caddr);
-  Wire.write((byte)addr);	
+  Wire.write((byte)addr);   
   Wire.endTransmission();
   Wire.requestFrom(MCP23008_ADDRESS | i2caddr, 1);
 

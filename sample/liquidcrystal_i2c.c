@@ -4,8 +4,8 @@
  and shows the time.
  
   The circuit:
- * 5V to Arduino 5V pin
- * GND to Arduino GND pin
+ * 5V to 5V pin
+ * GND to GND pin
  * SCL to Analog #5
  * SDA to Analog #4
 */
@@ -37,3 +37,4 @@ void loop() {
   lcd.setBacklight(LOW);
   delay(500);
 }
+

@@ -1,15 +1,25 @@
 #include "Arduino.h"
 #include "wiring_private.h"
 
-#define PWM_IF_PREFIX "/sys/class/leds/pwm"
-#define PWM_IF_MAX "max_brightness"
-#define PWM_IF "brightness"
+static const char *pwm_dev = "/dev/pwmtimer";
+
+typedef struct tagPWM_Config {
+    int channel;
+    int dutycycle;
+} PWM_Config,*pPWM_Config;
+
+#define PWMTMR_START    (0x101)
+#define PWMTMR_STOP     (0x102)
+#define PWMTMR_FUNC     (0x103)
+#define PWMTMR_TONE     (0x104)
+#define PWM_CONFIG      (0x105)
+#define HWPWM_DUTY      (0x106)
 
 //under construct
 uint8_t analog_reference = 0;
 void analogReference(uint8_t mode)
 {
-	analog_reference = mode;
+    analog_reference = mode;
 }
 
 int analogRead(uint8_t pin)
@@ -46,49 +56,65 @@ int analogRead(uint8_t pin)
 
 }
 
-
 void analogWrite(uint8_t pin, int value)
 {
-	char path[128];
-	 char buf[32];
-	 char cmd[128];
-	 int ret = -1;
-	 int fd = -1;
-	 int max_level = 0;
-	 int map_level = 0;
-		 
-	 if ( (pin >= 0 && pin <= MAX_PWM_NUM) && 
-		 (value >= 0 && value <= MAX_PWM_LEVEL) )
-	 {
-		 memset((void *)path, 0, sizeof(path));
-		 sprintf(path, "%s%d/%s", PWM_IF_PREFIX, pin, PWM_IF_MAX);
-		 fd = open(path, O_RDONLY);
-		 if ( fd < 0 )
-		 {
-			 fprintf(stderr, "open %s failed\n", path);
-			 exit(-1);
-		 }
-		 
-		 ret = read(fd, buf, sizeof(buf));
-		 close(fd);
-		 
-		 if ( ret <= 0 )
-		 {
-			 fprintf(stderr, "read %s failed\n", path);
-			 exit(-1);
-		 }
-		 
-		 max_level = atoi(buf);
-		 map_level = (max_level * value)/MAX_PWM_LEVEL;
-		 memset((void *)cmd, 0, sizeof(cmd));
-		 sprintf(cmd, "echo %d > %s%d/%s", 
-			 map_level, PWM_IF_PREFIX, pin, PWM_IF);
-		 system(cmd);
-	 }
-	 else
-	 {
-		 fprintf(stderr, "%s ERROR: invalid pin, pin=%d\n", __FUNCTION__, pin);
-		 exit(-1);
-	 }		
+     int ret = -1;
+     int fd = -1;
+     int val = 0;
+     PWM_Config pwmconfig;
+         
+     pwmconfig.channel = pin;
+     pwmconfig.dutycycle = value;
+     if ( (pin == 3 || pin == 5 || pin == 6 || pin == 9 || pin == 10 || pin == 11) && 
+         (value >= 0 && value <= MAX_PWM_LEVEL) )
+     {
+         fd = open(pwm_dev, O_RDONLY);
+         if ( fd < 0 )
+             pabort("open pwm device fail");
+                
+         switch (pin) 
+         {
+         case 5:
+         case 6:
+            ret = ioctl(fd, HWPWM_DUTY, &pwmconfig);
+            if (ret < 0)
+               pabort("can't set HWPWM_DUTY");
+            break;
+         case 3:
+         case 9:    
+         case 10:   
+         case 11:   
+            if (value <= 32) {
+               //ret = ioctl(fd, PWMTMR_STOP, &val);
+               //if (ret < 0)
+               //   pabort("can't set PWMTMR_STOP");
+
+               //ret = ioctl(fd, PWMTMR_FUNC, &val);
+               //if (ret < 0)
+               //   pabort("can't set PWMTMR_FUNC");    
+                       
+               ret = ioctl(fd, PWM_CONFIG, &pwmconfig);
+               if (ret < 0)
+                  pabort("can't set PWM_CONFIG");   
+
+               ret = ioctl(fd, PWMTMR_START, &val);
+               if (ret < 0)
+                  pabort("can't set PWMTMR_START");                     
+            }else
+               fprintf(stderr, "%s ERROR: invalid dutycycle[0,32], pin=%d\n", __FUNCTION__, pin);
+
+            break;
+
+         default:   
+            break;
+         }
+         if(fd)
+            close(fd);
+     }
+     else
+     {
+         fprintf(stderr, "%s ERROR: invalid pin, pin=%d\n", __FUNCTION__, pin);
+         exit(-1);
+     }      
 }
 

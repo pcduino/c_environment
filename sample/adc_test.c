@@ -1,5 +1,5 @@
 /*
-* ADC test program for a10
+* ADC test program
 */
 #include <core.h>
 int adc_id = 0;
@@ -9,12 +9,12 @@ void setup()
 {
     if ( argc != 2 )
     {
-        printf("Usage %s ADC_ID(0/1/2/3/4/5)\n", argv[0]);
+        printf("Usage %s ADC_ID(0/1/2/3/4/5/6/7/8/9/10/11)\n", argv[0]);
         printf("Default will get ADC0 value\n");  
     }
     
     if(argc==2) 
-    	adc_id = atoi(argv[1]);
+        adc_id = atoi(argv[1]);
 }
 
 void loop()

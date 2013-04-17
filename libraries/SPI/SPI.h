@@ -30,8 +30,8 @@
 
 class SPIClass {
 public:
-	SPIClass();
-	~SPIClass();
+    SPIClass();
+    ~SPIClass();
   void begin();
   void end();
 
@@ -41,8 +41,8 @@ public:
   char transfer(char val, int transferMode);
 
 private:
-	int _fd;
-	int _speed;
+    int _fd;
+    int _speed;
 };
 
 extern SPIClass SPI;

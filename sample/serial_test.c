@@ -1,21 +1,11 @@
-/*
-  ASCII table
- 
- Prints out byte values in all possible formats:  
- * as raw binary values
- * as ASCII-encoded decimal, hex, octal, and binary values
- 
- For more on ASCII, see http://www.asciitable.com and http://en.wikipedia.org/wiki/ASCII
-*/
 #include <core.h>
 #include "Serial.h"
 
 void setup() { 
  //Initialize serial and wait for port to open:
-  int rate = 9600;
+  int rate = 115200;
   Serial.begin(rate); 
-  while (!Serial)
- {
+  while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
   
@@ -72,14 +62,14 @@ void loop() {
 */  
 
   if (Serial.available() > 0) {
-	// read the incoming byte:
+    // read the incoming byte:
     thisByte = Serial.read();
  
     // say what you got:
     Serial.print("I received: ");
     Serial.println(thisByte, DEC);
-	//Serial.println(thisByte, OCT);
-  }		  
+    //Serial.println(thisByte, OCT);
+  }       
 
   delay(200);
 

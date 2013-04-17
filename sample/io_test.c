@@ -1,5 +1,5 @@
 /*
-* I/O test program for a10
+* I/O test program
 */
 #include <core.h>
 int led_pin = 1;

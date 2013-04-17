@@ -1,5 +1,5 @@
 /*
-* Temperature sensor test program for a10
+* Temperature sensor test program
 */
 #include <core.h>
 
@@ -10,8 +10,8 @@
 const int sensorADC = 0;
 
 void setup(){
-	printf("Temperature sensor test code!\n");
-	printf("Using ADC_0=Sensor output.\n");
+    printf("Temperature sensor test code!\n");
+    printf("Using ADC_0=Sensor output.\n");
 } 
  
 void loop()
