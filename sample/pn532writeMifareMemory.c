@@ -1,6 +1,8 @@
 // This example writes a MIFARE memory block 0x08. It is tested with a new MIFARE 1K cards. Uses default keys.
 // Note: Memory block 0 is readonly and contains manufacturer data. Do not write to Sector Trailer block
 // unless you know what you are doing. Otherwise, the MIFARE card may be unusable in the future.
+//A portion of the code is used from https://github.com/adafruit/Adafruit-PN532
+
 
 #include <core.h>
 #include "Serial.h"

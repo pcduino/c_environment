@@ -1,3 +1,6 @@
+//A portion of the code is used from https://github.com/adafruit/Adafruit-PN532
+
+
 #include <Arduino.h>
 #include "SPI.h"
 #include "Serial.h"

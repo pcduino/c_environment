@@ -1,4 +1,6 @@
 //This example reads a MIFARE memory block. It is tested with a new MIFARE 1K cards. Uses default keys.
+//A portion of the code is used from https://github.com/adafruit/Adafruit-PN532
+
 
 #include <core.h>
 #include "Serial.h"

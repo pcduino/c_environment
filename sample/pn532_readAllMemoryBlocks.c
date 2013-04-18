@@ -1,4 +1,6 @@
 //This example reads all MIFARE memory block from 0x00 to 0x63. It is tested with a new MIFARE 1K cards. Uses default keys for authentication.
+//A portion of the code is used from https://github.com/adafruit/Adafruit-PN532
+
 
 #include <core.h>
 #include "Serial.h"
