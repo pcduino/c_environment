@@ -22,6 +22,8 @@ extern "C" {
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
 
+#define I2CCLOCK_CHANGE 0x0740
+
 // Initialize Class Variables //////////////////////////////////////////////////
 int TwoWire::i2c_handle = 0;
     
@@ -70,6 +72,26 @@ void TwoWire::begin(int address)
 {
   /* not support slave mode */
   return;
+}
+
+// bus freq range 10kHz-400kHz
+void TwoWire::setBusFreq(unsigned int speed_hz)
+{
+  int libi2cdev;
+
+  if ((speed_hz > 400000) || (speed_hz < 10000))
+  {
+     printf("invalid bus freq, range[10000,400000]\r\n");
+     return;
+  }
+
+  if ((libi2cdev = open("/dev/hwi2c", O_RDWR)) < 0) 
+    pabort("can't open device");       
+  
+  if (ioctl(libi2cdev, I2CCLOCK_CHANGE, &speed_hz) < 0) 
+    pabort("change I2C bus freq fail");
+
+  close(libi2cdev);
 }
 
 uint8_t TwoWire::requestFrom(int address, int quantity)

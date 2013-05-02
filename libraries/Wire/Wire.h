@@ -13,7 +13,7 @@
 class TwoWire : public Stream
 {
   private:
-  	static int i2c_handle;
+    static int i2c_handle;
     static uint8_t rxBuffer[];
     static uint8_t rxBufferIndex;
     static uint8_t rxBufferLength;
@@ -32,6 +32,7 @@ class TwoWire : public Stream
     void begin();
     void begin(uint8_t);
     void begin(int);
+    void setBusFreq(unsigned int);
     void beginTransmission(uint8_t);
     void beginTransmission(int);
     uint8_t endTransmission(void);
@@ -42,7 +43,7 @@ class TwoWire : public Stream
     virtual int available(void);
     virtual int read(void);
     virtual int peek(void);
-	virtual void flush(void);
+    virtual void flush(void);
     void onReceive( void (*)(int) );
     void onRequest( void (*)(void) );
   
