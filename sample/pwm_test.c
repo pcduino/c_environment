@@ -11,7 +11,7 @@ void setup()
 {
     if ( argc != 4 )
     {
-        printf("Usage %s PIN_ID(3/9/10/11) Frequency[126-2000]Hz Duty Level or PIN_ID(5/6) Frequency[195,260,390,520,781]Hz Duty Level\n ", argv[0]);
+        printf("Usage %s PIN_ID(3/9/10/11) Frequency[125-2000]Hz Duty Level or PIN_ID(5/6) Frequency[195,260,390,520,781]Hz Duty Level\n ", argv[0]);
         exit(-1);   
     }
     

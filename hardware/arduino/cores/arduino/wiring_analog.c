@@ -154,7 +154,7 @@ int analogRead(uint8_t pin)
 }
 
 /*  
- * pin(3/9/10/11) support frequency[126-2000]Hz @different dutycycle
+ * pin(3/9/10/11) support frequency[125-2000]Hz @different dutycycle
  * pin(5/6) support frequency[195,260,390,520,781] @256 dutycycle
  */
 int pwmfreq_set(uint8_t pin, unsigned int freq)
