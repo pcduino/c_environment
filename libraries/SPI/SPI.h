@@ -10,6 +10,7 @@
 
 #ifndef _SPI_H_INCLUDED
 #define _SPI_H_INCLUDED
+
 #define SPI_CONTINUE 0
 #define SPI_LAST     1
 
@@ -30,8 +31,8 @@
 
 class SPIClass {
 public:
-    SPIClass();
-    ~SPIClass();
+  SPIClass(char bus);
+  ~SPIClass();
   void begin();
   void end();
 
@@ -41,10 +42,12 @@ public:
   char transfer(char val, int transferMode);
 
 private:
+    int _devid;
     int _fd;
     int _speed;
 };
 
 extern SPIClass SPI;
+extern SPIClass SPIEX;
 
 #endif

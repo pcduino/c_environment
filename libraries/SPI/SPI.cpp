@@ -11,14 +11,19 @@
 #include "SPI.h"
 #include <linux/spi/spidev.h>
 
-SPIClass SPI;
+SPIClass SPI(0);
+SPIClass SPIEX(1);
 
 static const char *spi_name = "/dev/spidev0.0";
+static const char *spi1_name = "/dev/spidev1.0";
+static const char *spi2_name = "/dev/spidev2.0";
 static int _bits_per_word = 8;
-SPIClass::SPIClass()
+SPIClass::SPIClass(char bus)
 {
+    _devid = bus;
     _fd = 0;
 }
+
 SPIClass::~SPIClass()
 {
     end();
@@ -29,13 +34,26 @@ void SPIClass::begin() {
     int max_speed = 0, default_mode=0;
     int mode;
  
-    hw_pinMode(SPI_CS, IO_SPI_FUNC); //CS
-    hw_pinMode(SPI_MOSI, IO_SPI_FUNC); //MOSI
-    hw_pinMode(SPI_MISO, IO_SPI_FUNC); //MISO
-    hw_pinMode(SPI_CLK, IO_SPI_FUNC); //CLK
+    if (_devid == 0) {
+       hw_pinMode(SPI_CS, IO_SPI_FUNC);   //CS
+       hw_pinMode(SPI_MOSI, IO_SPI_FUNC); //MOSI
+       hw_pinMode(SPI_MISO, IO_SPI_FUNC); //MISO
+       hw_pinMode(SPI_CLK, IO_SPI_FUNC);  //CLK
+    }else if(_devid == 1) {
+       hw_pinMode(SPIEX_CS, IO_SPIEX_FUNC);   //CS
+       hw_pinMode(SPIEX_MOSI, IO_SPIEX_FUNC); //MOSI
+       hw_pinMode(SPIEX_MISO, IO_SPIEX_FUNC); //MISO
+       hw_pinMode(SPIEX_CLK, IO_SPIEX_FUNC);  //CLK
+    }
         
-    if (!_fd)
-        _fd = open(spi_name, O_RDWR);
+    if (!_fd){
+       if (_devid == 0) 
+          _fd = open(spi_name, O_RDWR);
+       else if (_devid == 1)
+          _fd = open(spi2_name, O_RDWR);
+          if (_fd < 0)
+             _fd = open(spi1_name, O_RDWR);
+    }
     if (_fd < 0)
         pabort("can't open device");
     
@@ -147,7 +165,7 @@ char SPIClass::transfer(char val, int transferMode)
     if (transferMode == SPI_CONTINUE) 
        delay_usecs = 0;
     else if (transferMode == SPI_LAST)  
-       delay_usecs = 0xAA55;    
+       delay_usecs = 0xAA55;
 
     memset(&tr, 0x0, sizeof(spi_ioc_transfer));
     tr.tx_buf = (unsigned long)&tx;

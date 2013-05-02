@@ -150,7 +150,7 @@ void LiquidCrystal::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
      SPI.begin(); 
      SPI.setDataMode(SPI_MODE3);
      SPI.setBitOrder(MSBFIRST);
-     //SPI.setClockDivider(SPI_CLOCK_DIV16);
+     SPI.setClockDivider(SPI_CLOCK_DIV8);
     _SPIbuff = 0x80; // backlight
   }
 

@@ -44,7 +44,7 @@ void init()
          } 
      }
      
-     for( i = 0; i<= MAX_ADC_NUM; ++i)
+     for( i = 0; i<= 5; ++i)
      {
          memset(path, 0, sizeof(path));
          sprintf(path, "%s%d", ADC_IF, i);

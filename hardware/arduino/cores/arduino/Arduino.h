@@ -87,6 +87,7 @@ int digitalRead(uint8_t);
 int analogRead(uint8_t);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t, int);
+int pwmfreq_set(uint8_t pin, unsigned int freq);
 
 unsigned long millis(void);
 unsigned long micros(void);

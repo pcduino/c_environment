@@ -4,19 +4,27 @@
 #include <core.h>
 int pwm_id = 0;
 int delay_us = 200000;
+int freq = 1000; //1kHz
+int step = 0;
 int value =  MAX_PWM_LEVEL/2;
 void setup()
 {
-    if ( argc != 3 )
+    if ( argc != 4 )
     {
-        printf("Usage %s PIN_ID(3/9/10/11) Duty Level(0~32) or PIN_ID(5/6) Duty Level(0~255)\n ", argv[0]);
+        printf("Usage %s PIN_ID(3/9/10/11) Frequency[126-2000]Hz Duty Level or PIN_ID(5/6) Frequency[195,260,390,520,781]Hz Duty Level\n ", argv[0]);
         exit(-1);   
     }
     
     pwm_id = atoi(argv[1]);
-    value = atoi(argv[2]); 
-    printf("PWM%d test with duty cycle %d\n", pwm_id, value);
-    analogWrite(pwm_id, value);
+    freq = atoi(argv[2]);
+    value = atoi(argv[3]); 
+
+    step = pwmfreq_set(pwm_id, freq);
+    printf("PWM%d set freq %d and valid duty cycle range [0, %d]\n", pwm_id, freq, step);
+    if (step > 0){
+       printf("PWM%d test with duty cycle %d\n", pwm_id, value);
+       analogWrite(pwm_id, value);
+    }
 }
 
 void loop()
