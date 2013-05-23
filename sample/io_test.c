@@ -7,6 +7,7 @@ int btn_pin = 5;
 
 void setup()
 {
+#ifndef PCDUINO_IDE
     if ( argc != 3 )
     {
         printf("Usage %s BUTTON_PIN_NUM(0-13) LED_PIN_NUM(0-13)\n", argv[0]);
@@ -16,6 +17,7 @@ void setup()
    
     btn_pin = atoi(argv[1]);
     led_pin = atoi(argv[2]);
+#endif
     
     printf("press button (connected to pin %d) to turn on LED (connected to pin %d)\n",
         btn_pin, led_pin);

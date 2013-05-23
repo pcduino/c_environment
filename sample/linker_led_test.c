@@ -6,11 +6,13 @@ int led_pin = 1;
 
 void setup()
 {
+#ifndef PCDUINO_IDE
     if(argc != 2){
         goto _help;
     }
     
     led_pin = atoi(argv[1]);
+#endif
     if((led_pin < 0) || (led_pin > 13)){
         goto _help;
     }

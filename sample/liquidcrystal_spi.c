@@ -14,6 +14,7 @@
 
 // include the library code:
 #include <core.h>
+#include "SPI.h"
 #include "Wire.h"
 #include "LiquidCrystal.h"
 

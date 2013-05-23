@@ -7,6 +7,7 @@
 #include <core.h>
 #include "Serial.h"
 #include "PN532.h"
+#include "SPI.h"
 
 
 #define SCK 13
