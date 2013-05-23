@@ -175,7 +175,7 @@ HwSerial::HwSerial()
 {
     _rx_buffer.head = _rx_buffer.tail = 0;
     _tx_buffer.head = _tx_buffer.tail = 0;
-    _fd = 0;
+    _fd = -1;
 }
 
 HwSerial::~HwSerial()
@@ -192,7 +192,7 @@ void HwSerial::begin(unsigned long baud, byte config)
     hw_pinMode(GPIO1, IO_UART_FUNC); //uart_tx
 
     _fd = open(serial_name, O_RDWR| O_NOCTTY | O_NONBLOCK );
-    if (ret == -1)
+    if (_fd < 0 )
     {
         pabort("can't open tty");
     }
@@ -266,7 +266,7 @@ void HwSerial::end()
 {
     if(_fd)
         close(_fd);
-    _fd = 0;
+    _fd = -1;
 }
 
 int HwSerial::available(void)
@@ -315,6 +315,10 @@ int HwSerial::process_recv()
 {
     int len =  SERIAL_BUFFER_SIZE - available();
     int retval = 0;
+
+    if ( _fd < 0 )
+        return -1;
+
     if(len > 0)
     {
         //fd_set   fs_read;
