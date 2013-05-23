@@ -16,12 +16,11 @@ INCLUDES = \
 	-I$(DIR)/hardware/arduino/variants \
 	-I$(DIR)/hardware/arduino/variants/sunxi \
 	-I$(DIR)/libraries \
-	-I$(DIR)/libraries/Serial \
 	-I$(DIR)/libraries/SPI \
 	-I$(DIR)/libraries/Wire \
 	-I$(DIR)/libraries/PN532_SPI 
 
-CFLAGS =
+CFLAGS = -fPIC
 #CFLAGS = $(INCLUDES)
 #CFLAGS += -march=armv7-a -mfpu=neon
 
@@ -39,7 +38,7 @@ SRCS = \
 	hardware/arduino/cores/arduino/wiring_shift.c \
 	hardware/arduino/cores/arduino/WMath.cpp \
 	hardware/arduino/cores/arduino/WString.cpp \
-	libraries/Serial/Serial.cpp \
+	hardware/arduino/cores/arduino/Serial.cpp \
 	libraries/Wire/Wire.cpp \
 	libraries/SPI/SPI.cpp \
 	libraries/LiquidCrystal/Dyrobot_MCP23008.cpp \
@@ -57,16 +56,19 @@ OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRCS)))
 	@rm -f $@ 
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -Wno-deprecated-declarations
 
-LIB = libarduino.a 
+LIB_STATIC = libarduino.a
+LIB_SHARE = libarduino.so
+LIB = $(LIB_STATIC) $(LIB_SHARE)
 
 all: $(LIB)
 	make -C sample/
 
 
 $(LIB): $(OBJS)
-	$(AR) cq $(LIB) $(OBJS)
+	$(AR) cq $(LIB_STATIC) $(OBJS)
+	$(CXX) -shared -Wl,-soname,$(LIB_SHARE) -o $(LIB_SHARE) $(OBJS)
 
 clean:
-	rm -f $(LIB) $(OBJS)
+	rm -f $(LIB_STATIC) $(LIB_SHARE) $(OBJS)
 
 

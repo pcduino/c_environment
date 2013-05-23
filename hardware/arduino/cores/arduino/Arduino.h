@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <signal.h>
+#include <sys/time.h>
 
 #ifdef __cplusplus
 extern "C"{
@@ -122,6 +123,7 @@ extern char **argv;
 #ifdef __cplusplus
 #include "WCharacter.h"
 #include "WString.h"
+#include "Serial.h"
 
 //unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000L);
 void tone(uint8_t _pin, unsigned int frequency, unsigned long duration = 0);

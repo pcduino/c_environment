@@ -46,10 +46,10 @@ void attachInterrupt(uint8_t interruptNum, void (*userFunc)(void), int modec)
 
       switch (interruptNum) {
       case 0:
-         signal(SIGUSR1, (void *)userFunc);
+         signal(SIGUSR1, (void (*) (int))userFunc);
          break;
       case 1:
-         signal(SIGUSR2, (void *)userFunc);
+         signal(SIGUSR2, (void (*) (int))userFunc);
          break;
       }
 
