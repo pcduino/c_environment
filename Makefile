@@ -73,6 +73,7 @@ clean:
 
 install:
 	cp -rf $(DIR)/$(LIB_STATIC) /usr/local/lib/
+	cp -rf $(DIR)/$(LIB_SHARE) /usr/local/lib/
 	cp -rf $(DIR)/hardware /usr/local/include/
 	cp -rf $(DIR)/libraries /usr/local/include/
 	cp -rf $(DIR)/sample/core.h /usr/local/include/
