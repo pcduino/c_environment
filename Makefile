@@ -61,7 +61,13 @@ LIB_SHARE = libarduino.so
 LIB = $(LIB_STATIC) $(LIB_SHARE)
 
 all: $(LIB)
-	make -C sample/
+
+	ifneq (,$(findstring NOSAMPLES,$(MAKEFLAGS)))
+		make -C sample/
+	else
+	
+	endif
+
 
 
 $(LIB): $(OBJS)
