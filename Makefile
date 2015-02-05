@@ -63,19 +63,19 @@ LIB = $(LIB_STATIC) $(LIB_SHARE)
 all: $(LIB)
 
 $(LIB): $(OBJS)
-        $(AR) cq $(LIB_STATIC) $(OBJS)
-        $(CXX) -shared -Wl,-soname,$(LIB_SHARE) -o $(LIB_SHARE) $(OBJS)
+	$(AR) cq $(LIB_STATIC) $(OBJS)
+	$(CXX) -shared -Wl,-soname,$(LIB_SHARE) -o $(LIB_SHARE) $(OBJS)
 
 clean:
-        rm -f $(LIB_STATIC) $(LIB_SHARE) $(OBJS)
+	rm -f $(LIB_STATIC) $(LIB_SHARE) $(OBJS)
 
 install:
-        cp -rf $(DIR)/$(LIB_STATIC) /usr/local/lib/
-        cp -rf $(DIR)/$(LIB_SHARE) /usr/local/lib/
-        cp -rf $(DIR)/hardware /usr/local/include/
-        cp -rf $(DIR)/libraries /usr/local/include/
-        cp -rf $(DIR)/sample/core.h /usr/local/include/
+	cp -rf $(DIR)/$(LIB_STATIC) /usr/local/lib/
+	cp -rf $(DIR)/$(LIB_SHARE) /usr/local/lib/
+	cp -rf $(DIR)/hardware /usr/local/include/
+	cp -rf $(DIR)/libraries /usr/local/include/
+	cp -rf $(DIR)/sample/core.h /usr/local/include/
 
 samples:
-        make -C sample/
+	make -C sample/
 
