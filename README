@@ -1,6 +1,5 @@
 Installation instructions:
 
-"$ make"
-"$ sudo make install"
-
+Run "$ make" first then if you want to build the examples run
+"$ make samples". Finally run "$ sudo make install" to copy headers and libraries to your pcduino
 
