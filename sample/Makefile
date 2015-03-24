@@ -23,7 +23,7 @@ OBJS += linker_led_test linker_potentiometer_test linker_tilt_test linker_light_
 OBJS += linker_touch_sensor_test linker_magnetic_sensor_test linker_temperature_sensor_test linker_joystick_test
 OBJS += linker_rtc_test linker_sound_sensor_test linker_buzzer_test linker_hall_sensor_test linker_led_bar_test linker_relay_test
 OBJS += pn532_readAllMemoryBlocks pn532readMifareMemory pn532readMifareTargetID pn532writeMifareMemory
-
+OBJS += NRF24L01_RX 
 all: 
 	@mkdir -p $(TARGET)
 	@for i in $(OBJS); do echo "$(CXX) $(INCS) $$i.c -o $(TARGET)/$$i $(LIBS)" && $(CXX) $(INCS) $$i.c -o $(TARGET)/$$i $(LIBS); done
