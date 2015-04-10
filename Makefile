@@ -18,7 +18,7 @@ INCLUDES = \
 	-I$(DIR)/libraries \
 	-I$(DIR)/libraries/SPI \
 	-I$(DIR)/libraries/Wire \
-	-I$(DIR)/libraries/PN532_SPI 
+	-I$(DIR)/libraries/PN532_SPI
 
 CFLAGS = -fPIC
 #CFLAGS = $(INCLUDES)
@@ -49,11 +49,11 @@ SRCS = \
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRCS)))
 
 %.o: %.cpp
-	@rm -f $@ 
+	@rm -f $@
 	$(CXX) $(CFLAGS) $(INCLUDES) -c $< -o $@ -Wno-deprecated-declarations
 
 %.o: %.c
-	@rm -f $@ 
+	@rm -f $@
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -Wno-deprecated-declarations
 
 LIB_STATIC = libarduino.a
@@ -61,8 +61,6 @@ LIB_SHARE = libarduino.so
 LIB = $(LIB_STATIC) $(LIB_SHARE)
 
 all: $(LIB)
-	make -C sample/
-
 
 $(LIB): $(OBJS)
 	$(AR) cq $(LIB_STATIC) $(OBJS)
@@ -71,4 +69,13 @@ $(LIB): $(OBJS)
 clean:
 	rm -f $(LIB_STATIC) $(LIB_SHARE) $(OBJS)
 
+install:
+	cp -rf $(DIR)/$(LIB_STATIC) /usr/local/lib/
+	cp -rf $(DIR)/$(LIB_SHARE) /usr/local/lib/
+	cp -rf $(DIR)/hardware /usr/local/include/
+	cp -rf $(DIR)/libraries /usr/local/include/
+	cp -rf $(DIR)/sample/core.h /usr/local/include/
+
+samples:
+	make -C sample/
 
