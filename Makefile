@@ -68,6 +68,7 @@ LIB = $(LIB_STATIC) $(LIB_SHARE)
 
 all: $(LIB)
 	#make -C sample/
+	make -C ../
 
 $(LIB): $(OBJS)
 	$(AR) cq $(LIB_STATIC) $(OBJS)
