@@ -30,7 +30,7 @@ TARGET=../output/test
 OBJS += MPU6050_test MPU6050_raw MPU6050_DMP6
 all: 
 	@mkdir -p $(TARGET)
-	@for i in $(OBJS); do echo "$(CXX) $(INCS) $$i.c -fPIC -o $(TARGET)/$$i.so $(LIBS) " && $(CXX) $(INCS) $$i.c -fPIC -o $(TARGET)/$$i.so $(LIBS) -shared; done
+	@for i in $(OBJS); do echo "$(CXX) $(INCS) $$i.c -fPIC -o $(TARGET)/$$i.so $(LIBS) -shared" && $(CXX) $(INCS) $$i.c -fPIC -o $(TARGET)/$$i.so $(LIBS) -shared; done
 
 clean:
 	@for i in $(OBJS); do rm -f $(TARGET)/$$i; done
